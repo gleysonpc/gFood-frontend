@@ -66,7 +66,7 @@ export const CartProvider: React.FC = ({ children }) => {
     if (itemFoundIndex >= 0 && items[itemFoundIndex].quantity > 1) {
       let updatedList = items;
       updatedList[itemFoundIndex].quantity =
-        updatedList[itemFoundIndex].quantity - 1;
+      updatedList[itemFoundIndex].quantity - 1;
       setItems(updatedList);
       const updatedTotal = total - 1;
       localStorage.setItem(
@@ -94,7 +94,9 @@ export const CartProvider: React.FC = ({ children }) => {
     }
 
     if (total === 1) {
-      clearCart();
+      setItems([]);
+      setTotal(0);
+      localStorage.removeItem('@Cart');
     }
   }
 
@@ -110,7 +112,9 @@ export const CartProvider: React.FC = ({ children }) => {
       .post('/orders', { userId: user?.id, storeId: items[0].storeId })
       .then((res) => {
         console.log(res.data);
-        clearCart();
+        setItems([]);
+        setTotal(0);
+        localStorage.removeItem('@Cart');
         toast.success('Order Placed! :)');
       });
   }
