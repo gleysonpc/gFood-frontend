@@ -14,7 +14,7 @@ export const WebSocketProvider: React.FC = ({ children }) => {
 
   const socket = React.useMemo<SocketIOClient.Socket>(
     () =>
-      io('http://localhost:3333', {
+      io(process.env.REACT_APP_API as string, {
         query: { userId: user?.id },
       }),
     [user?.id]
