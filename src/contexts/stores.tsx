@@ -26,12 +26,15 @@ export const StoresProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     function fetchStores() {
+      setLoading(true);
       api
         .get<IStore[]>('/stores')
         .then((res) => {
           setStores(res.data);
+          setLoading(false);
         })
         .catch((err) => {
+          setLoading(false);
           console.log(err);
           toast.error('Fail to load stores! :( ');
         });

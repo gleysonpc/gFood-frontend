@@ -1,23 +1,25 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import './login.css';
 import loginLogo from '../../assets/order.png';
 import { useAuth } from '../../contexts/auth';
 import { Button, Form, Input, Label } from 'reactstrap';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
-  const { signIn, signed, user } = useAuth();
-  const history = useHistory();
+  const { signIn, signed } = useAuth();
+  const location = useLocation();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     signIn(email);
   }
 
-  useEffect(() => {
-    signed && history.push(user?.store ? '/' : '/liststores');
-  }, [history, signed, user?.store]);
+  const { from } = (location.state as any) || { from: { pathname: '/' } };
+
+  if (signed) {
+    return <Redirect to={from} />;
+  }
 
   return (
     <div className="text-center" id="login-root">

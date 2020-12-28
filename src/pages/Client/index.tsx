@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import StoreCard from '../../components/StoreCard';
 import { useAuth } from '../../contexts/auth';
 import { useStores } from '../../contexts/stores';
